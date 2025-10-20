@@ -44,8 +44,8 @@ checkpoints/
 weights/
 
 # Dataset
-dataset/
-data/
+/dataset/
+/data/
 *.zip
 
 # Logs and Results
