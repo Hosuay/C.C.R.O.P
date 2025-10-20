@@ -1,127 +1,556 @@
-# C.C.R.O.P
-🌿 Cannabis Leaf Disease Detection (AI Vision Model)
-🚀 Deep Learning Project using PyTorch & Kaggle Dataset
+# 🌿 C.C.R.O.P - Cannabis Crop Research in Optimization of Plant-Health
 
-This project uses a Convolutional Neural Network (CNN) trained on the Leaf Manifestation Diseases of Cannabis dataset
- to detect early signs of leaf stress and disease in Cannabis sativa.
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-The purpose of this model is to contribute toward open-source research in AI-assisted cultivation monitoring — forming part of CCROP’s (Center for Cannabaceae Research in Optimization of Plant-Health) initiative for sustainable plant health optimization.
+**AI-Powered Cannabis Leaf Disease Detection System** using state-of-the-art deep learning models including YOLOv8 for detection and ResNet/EfficientNet for classification.
 
-🧠 Project Overview
-🔍 Goal
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Demo%20Ready-success" alt="Status">
+  <img src="https://img.shields.io/badge/Version-2.0.0-blue" alt="Version">
+</p>
 
-Train a CNN to classify cannabis leaves into health categories based on visual symptoms, providing a foundation for AI-based early warning systems for cultivators and researchers.
+---
 
-🧩 Features
+## 📋 Table of Contents
 
-✅ Auto-downloads dataset directly from Kaggle (no manual uploads)
+- [Overview](#overview)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Usage](#usage)
+  - [Web Demo](#web-demo)
+  - [CLI Tools](#cli-tools)
+  - [Python API](#python-api)
+- [Model Training](#model-training)
+- [Project Structure](#project-structure)
+- [Results](#results)
+- [Contributing](#contributing)
+- [Citation](#citation)
+- [License](#license)
 
-🖼️ Preprocessing with image augmentation for better generalization
+---
 
-🧠 Transfer learning via pretrained model (ResNet or EfficientNet)
+## 🎯 Overview
 
-📊 Real-time training visualization and progress output
+C.C.R.O.P is an advanced AI system designed to automatically detect and classify cannabis leaf diseases and stress conditions. The system combines:
 
-💾 Model export to .pt for future deployment or fine-tuning
+- **YOLOv8**: For detecting and localizing individual leaves in images
+- **Deep Learning Classification**: ResNet/EfficientNet models for disease classification
+- **Stress Assessment**: Quantitative stress scoring (0-100 scale)
+- **Interactive Demo**: Web-based interface for easy demonstration
 
-📦 Dataset
+### Key Applications
 
-Dataset: Leaf Manifestation Diseases of Cannabis
+- 🔬 **Research**: Academic studies on plant pathology and AI in agriculture
+- 🌱 **Cultivation**: Real-time monitoring of crop health
+- 📊 **Data Analysis**: Large-scale plant health assessment
+- 🎓 **Education**: Teaching tool for plant disease recognition
 
-Source: Kaggle
-License: Open use for research and education
-Classes: Includes various categories of healthy and diseased cannabis leaves.
+---
 
-⚙️ Setup Instructions
-1️⃣ Open in Google Colab
+## ✨ Features
 
-You can run this entire project in Google Colab — no local setup required.
+### Core Capabilities
 
-2️⃣ Set Up Kaggle API Key
+- ✅ **Automatic Leaf Detection** - Uses YOLOv8 to locate individual leaves in complex images
+- ✅ **Multi-Class Disease Classification** - Identifies various disease types and severities
+- ✅ **Stress Quantification** - Provides 0-100% stress scores with health status
+- ✅ **Batch Processing** - Analyze hundreds of images efficiently
+- ✅ **Real-time Analysis** - Fast inference suitable for live monitoring
+- ✅ **Visual Overlays** - Clear bounding boxes and classification labels
 
-To automatically download the dataset, you’ll need your Kaggle API key.
+### Technical Features
 
-Go to Kaggle → Account → Create API Token
+- 🔧 **Modular Architecture** - Easy to extend and customize
+- 🚀 **GPU Acceleration** - CUDA support for fast inference
+- 📦 **Multiple Export Formats** - PyTorch, TorchScript, ONNX
+- 🎨 **Rich Visualizations** - Confusion matrices, training curves, detection overlays
+- 🌐 **Web Interface** - Gradio-based demo for easy sharing
 
-It will download a file called kaggle.json
+---
 
-Upload it to your Colab environment using the cell:
+## 🏗️ Architecture
 
-from google.colab import files
-files.upload()  # Select kaggle.json
+```
+┌─────────────────────────────────────────────────┐
+│              Input Image                        │
+└─────────────────┬───────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────────────┐
+│         YOLOv8 Leaf Detection                   │
+│  Detects and localizes individual leaves        │
+└─────────────────┬───────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────────────┐
+│         Leaf Cropping & Preprocessing           │
+│  Extracts detected regions for classification   │
+└─────────────────┬───────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────────────┐
+│    ResNet/EfficientNet Classification           │
+│  Classifies each leaf for disease/stress        │
+└─────────────────┬───────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────────────┐
+│      Results Aggregation & Scoring              │
+│  Overall health status and recommendations      │
+└─────────────────────────────────────────────────┘
+```
 
-3️⃣ Run the Notebook
+### Pipeline Modes
 
-Once uploaded, the notebook will:
+1. **Detection + Classification** (Recommended)
+   - First detects individual leaves using YOLO
+   - Then classifies each detected leaf
+   - Best for images with multiple leaves or complex backgrounds
 
-Install dependencies
+2. **Direct Classification**
+   - Classifies the entire image directly
+   - Faster but less accurate for multi-leaf images
+   - Good for close-up single leaf photos
 
-Set up Kaggle API access
+---
 
-Download the dataset
+## 📦 Installation
 
-Prepare data loaders
+### Prerequisites
 
-Train and validate the CNN
+- Python 3.8 or higher
+- CUDA-capable GPU (optional, but recommended for faster inference)
 
-Save your trained model
+### Option 1: Install from source (Recommended)
 
-🧪 Example Training Output
-Epoch [1/15], Loss: 0.5371, Accuracy: 87.4%
-Epoch [2/15], Loss: 0.3128, Accuracy: 91.2%
-...
-Training complete! Model saved to cannabis_leaf_model.pt
+```bash
+# Clone the repository
+git clone https://github.com/Hosuay/C.C.R.O.P.git
+cd C.C.R.O.P
 
-🧬 Project Structure
-📂 cannabis-leaf-disease-detection/
-│
-├── 📄 README.md
-├── 📓 cannabis_disease_detection.ipynb   # Main Colab notebook
-├── 📁 dataset/                           # Auto-downloaded from Kaggle
-├── 📁 outputs/
-│   └── cannabis_leaf_model.pt            # Saved model
-└── 📁 logs/                              # Training logs
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-🧩 Model Details
+# Install dependencies
+pip install -r requirements.txt
 
-Architecture: CNN (ResNet / EfficientNet)
+# Install the package in development mode
+pip install -e .
+```
 
-Framework: PyTorch
+### Option 2: Quick Install
 
-Optimizer: Adam
+```bash
+pip install -r requirements.txt
+```
 
-Loss Function: CrossEntropyLoss
+### Optional: Kaggle Dataset Download
 
-Metrics: Accuracy, Loss, Validation Accuracy
+If you want to download datasets from Kaggle:
 
-Image Size: 224x224 (normalized)
+```bash
+pip install kaggle
 
-🌱 Research Context
+# Setup Kaggle API credentials
+# Download kaggle.json from https://www.kaggle.com/settings
+mkdir ~/.kaggle
+cp kaggle.json ~/.kaggle/
+chmod 600 ~/.kaggle/kaggle.json
+```
 
-This model supports CCROP’s mission to:
+---
 
-Advance AI research in the cultivation of hemp and cannabis, providing open-source datasets and predictive models to improve crop health and sustainability.
+## 🚀 Quick Start
 
-The project focuses on early stress detection, disease classification, and AI integration in agricultural monitoring systems.
+### 1. Run the Web Demo (Easiest)
 
-🤝 Contributing
+```bash
+# Install dependencies
+pip install -r requirements.txt
 
-Pull requests are welcome!
-If you’d like to collaborate or test model variants, open an issue or contact CCROP through GitHub.
+# Launch the demo
+python demo/app.py
+```
 
-🧾 License
+Then open your browser to `http://localhost:7860`
 
-This project is distributed under the MIT License.
-Dataset usage must comply with Kaggle’s terms of service
-.
+**Note**: On first run, YOLOv8 weights will be downloaded automatically.
 
-💡 Citation
+### 2. Command Line Prediction
 
-If you use this work in your research, please cite:
+```bash
+# Single image (requires trained classifier)
+python cli/predict.py path/to/image.jpg \
+    --classifier checkpoints/best_model.pth \
+    --visualize --output results.jpg
 
+# Batch processing
+python cli/predict.py path/to/images/ \
+    --classifier checkpoints/best_model.pth \
+    --batch --output results.csv
+```
+
+### 3. Python API
+
+```python
+import torch
+from src.ccrop.models.pipeline import create_pipeline
+from src.ccrop.models.classifier import CCROPClassifier
+from src.ccrop.models.detector import LeafDetector
+from src.ccrop.inference.predictor import StressPredictor
+
+# Setup device
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+# Load models
+detector = LeafDetector(model_name="yolov8n.pt", device=device)
+classifier, metadata = CCROPClassifier.from_checkpoint(
+    "checkpoints/best_model.pth", device=device
+)
+
+# Create pipeline
+from src.ccrop.models.pipeline import CCROPPipeline
+pipeline = CCROPPipeline(
+    detector=detector,
+    classifier=classifier,
+    class_names=metadata['classes'],
+    stress_mapping=metadata['stress_mapping'],
+    device=device
+)
+
+# Create predictor
+predictor = StressPredictor(pipeline)
+
+# Analyze image
+results = predictor.predict_from_path("path/to/leaf.jpg")
+print(f"Stress Score: {results['overall_stress']:.2f}%")
+print(f"Leaves Detected: {results['num_leaves']}")
+```
+
+---
+
+## 💻 Usage
+
+### Web Demo
+
+The Gradio web interface provides the easiest way to demonstrate the system:
+
+```bash
+python demo/app.py
+```
+
+**Features:**
+- ✅ Single image analysis with visual results
+- ✅ Batch processing for multiple images
+- ✅ Side-by-side comparison of detection vs direct classification
+- ✅ Interactive model configuration
+- ✅ Real-time stress gauge visualization
+- ✅ Detailed results with recommendations
+
+### CLI Tools
+
+#### Prediction
+
+```bash
+# Basic prediction with visualization
+python cli/predict.py image.jpg \
+    --classifier checkpoints/best_model.pth \
+    --visualize --output result.jpg
+
+# Batch processing
+python cli/predict.py images/ --batch \
+    --classifier checkpoints/best_model.pth \
+    --output results.csv
+
+# Custom YOLO model with higher accuracy
+python cli/predict.py image.jpg \
+    --classifier checkpoints/best_model.pth \
+    --detector yolov8m.pt \
+    --conf-threshold 0.3
+
+# Skip detection (direct classification only)
+python cli/predict.py image.jpg \
+    --classifier checkpoints/best_model.pth \
+    --no-detect
+```
+
+### Python API
+
+#### Basic Usage
+
+```python
+from src.ccrop import CCROPPipeline, StressPredictor
+from src.ccrop.models.classifier import CCROPClassifier
+from src.ccrop.models.detector import LeafDetector
+
+# Initialize
+device = 'cuda'
+detector = LeafDetector(device=device)
+classifier, metadata = CCROPClassifier.from_checkpoint("model.pth", device=device)
+
+pipeline = CCROPPipeline(detector, classifier, metadata['classes'],
+                        metadata['stress_mapping'], device=device)
+predictor = StressPredictor(pipeline)
+
+# Predict
+results = predictor.predict_from_path("leaf.jpg")
+```
+
+#### Batch Processing
+
+```python
+from src.ccrop.inference.predictor import BatchPredictor
+
+batch_predictor = BatchPredictor(pipeline)
+df = batch_predictor.predict_directory("images/", output_csv="results.csv")
+```
+
+#### Visualization
+
+```python
+from src.ccrop.utils.visualization import plot_detections, visualize_predictions
+
+# Plot detections on image
+plot_detections(image, results['detections'], save_path="output.jpg")
+
+# Visualize multiple predictions in grid
+visualize_predictions(images, predictions, save_path="grid.jpg")
+```
+
+---
+
+## 🎓 Model Training
+
+### 1. Prepare Dataset
+
+The original Jupyter notebook (`CCROP.ipynb`) contains the complete training pipeline. You can use it in Google Colab:
+
+```python
+from src.ccrop.data import DatasetManager
+
+dm = DatasetManager(root_dir="./dataset")
+
+# Download from Kaggle (optional)
+dm.setup_kaggle_credentials(kaggle_json_path="kaggle.json")
+dm.download_from_kaggle("engineeringubu/leaf-manifestation-diseases-of-cannabis")
+dm.extract_dataset()
+
+# Find dataset
+dataset_path = dm.find_dataset_path()
+classes, stress_mapping = dm.get_class_info(dataset_path)
+```
+
+### 2. Train Classifier
+
+```python
+from src.ccrop.data import get_dataloaders
+from src.ccrop.models.classifier import create_classifier
+import torch.nn as nn
+import torch.optim as optim
+
+# Get data loaders
+train_loader, val_loader, test_loader, classes = get_dataloaders(
+    dataset_path, batch_size=16, num_workers=2
+)
+
+# Create model
+model = create_classifier(arch="resnet18", num_classes=len(classes))
+model = model.to(device)
+
+# Training setup
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.AdamW(model.parameters(), lr=1e-4, weight_decay=1e-4)
+scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
+                                                 factor=0.5, patience=3)
+
+# Training loop (see CCROP.ipynb for complete implementation)
+```
+
+### 3. Train Custom YOLO Detector (Advanced)
+
+```python
+from src.ccrop.models.detector import LeafDetector
+
+detector = LeafDetector()
+detector.train_custom_model(
+    data_yaml="leaf_detection_data.yaml",
+    epochs=100,
+    imgsz=640,
+    batch=16
+)
+```
+
+---
+
+## 📁 Project Structure
+
+```
+C.C.R.O.P/
+├── src/ccrop/                 # Main package
+│   ├── models/                # Model architectures
+│   │   ├── classifier.py      # ResNet/EfficientNet classifier
+│   │   ├── detector.py        # YOLO detector
+│   │   └── pipeline.py        # Integrated pipeline
+│   ├── data/                  # Dataset handling
+│   │   ├── dataset.py         # Dataset management
+│   │   └── transforms.py      # Image transformations
+│   ├── inference/             # Inference tools
+│   │   └── predictor.py       # Prediction classes
+│   └── utils/                 # Utilities
+│       ├── config.py          # Configuration management
+│       └── visualization.py   # Plotting functions
+├── demo/                      # Web demo
+│   └── app.py                 # Gradio interface
+├── cli/                       # Command-line tools
+│   └── predict.py             # Prediction CLI
+├── configs/                   # Configuration files
+├── notebooks/                 # Jupyter notebooks
+│   └── CCROP.ipynb           # Original training notebook
+├── tests/                     # Unit tests
+├── examples/                  # Example images
+├── checkpoints/               # Saved models (created during training)
+├── dataset/                   # Dataset directory (auto-created)
+├── results/                   # Output directory (auto-created)
+├── requirements.txt           # Dependencies
+├── setup.py                   # Package setup
+├── .gitignore                # Git ignore file
+└── README.md                  # This file
+```
+
+---
+
+## 📊 Results
+
+### Model Performance (Example)
+
+| Model | Accuracy | Precision | Recall | F1-Score |
+|-------|----------|-----------|--------|----------|
+| ResNet18 | 94.5% | 0.943 | 0.945 | 0.944 |
+| ResNet50 | 95.8% | 0.956 | 0.958 | 0.957 |
+| EfficientNet-B0 | 96.2% | 0.961 | 0.962 | 0.961 |
+
+*Note: Actual performance depends on dataset and training configuration*
+
+### Health Status Categories
+
+- 🟢 **Healthy** (0-33%): No visible signs of disease or stress
+- 🟠 **Moderate Stress** (33-66%): Early symptoms, monitoring recommended
+- 🔴 **Severe Stress** (66-100%): Significant disease, immediate action needed
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Here's how you can help:
+
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Commit your changes** (`git commit -m 'Add amazing feature'`)
+4. **Push to the branch** (`git push origin feature/amazing-feature`)
+5. **Open a Pull Request**
+
+### Development Setup
+
+```bash
+# Install development dependencies
+pip install -e ".[dev]"
+
+# Run tests
+pytest tests/
+
+# Format code
+black src/ demo/ cli/
+
+# Lint
+flake8 src/
+```
+
+---
+
+## 📖 Citation
+
+If you use C.C.R.O.P in your research, please cite:
+
+```bibtex
+@software{ccrop2024,
+  title={C.C.R.O.P: Cannabis Crop Research in Optimization of Plant-Health},
+  author={C.C.R.O.P Research Team},
+  year={2024},
+  url={https://github.com/Hosuay/C.C.R.O.P},
+  version={2.0.0}
+}
+```
+
+**Dataset Citation:**
+```bibtex
 @dataset{engineeringubu_leaf_manifestation_diseases_2023,
   title        = {Leaf Manifestation Diseases of Cannabis},
   author       = {EngineeringUBU},
   year         = {2023},
   url          = {https://www.kaggle.com/datasets/engineeringubu/leaf-manifestation-diseases-of-cannabis}
 }
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+Dataset usage must comply with Kaggle's terms of service.
+
+---
+
+## 🙏 Acknowledgments
+
+- **YOLOv8** by Ultralytics for object detection
+- **PyTorch** team for the deep learning framework
+- **Kaggle** and EngineeringUBU for the cannabis leaf disease dataset
+- Cannabis research community for domain expertise
+- Open-source contributors
+
+---
+
+## 📞 Contact & Support
+
+- **GitHub Issues**: [Report bugs or request features](https://github.com/Hosuay/C.C.R.O.P/issues)
+- **Pull Requests**: Contributions are welcome!
+
+---
+
+## 🌱 Research Context
+
+This model supports C.C.R.O.P's mission to advance AI research in the cultivation of hemp and cannabis, providing open-source datasets and predictive models to improve crop health and sustainability.
+
+The project focuses on:
+- Early stress detection in cannabis plants
+- Disease classification using computer vision
+- AI integration in agricultural monitoring systems
+- Open-source tools for researchers and cultivators
+
+---
+
+## 🚀 What's New in Version 2.0
+
+- ✨ **YOLO Integration**: Added YOLOv8 for automatic leaf detection
+- 🎨 **Web Demo**: Interactive Gradio interface for easy demonstrations
+- 🔧 **Modular Architecture**: Restructured as a proper Python package
+- 📦 **Multiple Formats**: Support for PyTorch, TorchScript, and ONNX
+- 🖥️ **CLI Tools**: Command-line interface for batch processing
+- 📊 **Enhanced Visualizations**: Better detection overlays and result formatting
+- 🐍 **Better API**: Clean Python API for integration into other projects
+
+---
+
+<p align="center">
+  <b>Built with ❤️ for the plant science community</b>
+</p>
+
+<p align="center">
+  <sub>C.C.R.O.P - Advancing plant health through artificial intelligence</sub>
+</p>

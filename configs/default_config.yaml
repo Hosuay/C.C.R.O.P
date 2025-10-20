@@ -1,0 +1,50 @@
+# C.C.R.O.P Default Configuration
+
+# Dataset settings
+dataset_main: "engineeringubu/leaf-manifestation-diseases-of-cannabis"
+dataset_fallback: "vipoooool/new-plant-diseases-dataset"
+root_dir: "./dataset"
+
+# Model settings
+classifier_arch: "resnet18"  # Options: resnet18, resnet34, resnet50, efficientnet_b0, efficientnet_b1, efficientnet_b2
+yolo_model: "yolov8n.pt"  # Options: yolov8n.pt, yolov8s.pt, yolov8m.pt, yolov8l.pt, yolov8x.pt
+input_size: 224
+num_workers: 2
+
+# Training hyperparameters
+batch_size: 16
+learning_rate: 0.0001
+weight_decay: 0.0001
+epochs: 15
+early_stopping_patience: 5
+
+# Data split
+train_split: 0.8
+val_split: 0.1
+test_split: 0.1
+
+# YOLO detection settings
+yolo_conf_threshold: 0.25  # Confidence threshold for detections
+yolo_iou_threshold: 0.45   # IoU threshold for NMS
+yolo_max_detections: 10    # Maximum detections per image
+
+# Detection + Classification pipeline
+use_detection: true  # If true, use YOLO first; otherwise direct classification
+min_leaf_area: 100   # Minimum pixel area for detected leaves
+
+# Paths
+checkpoint_dir: "./checkpoints"
+logs_dir: "./logs"
+results_dir: "./results"
+yolo_weights_dir: "./weights/yolo"
+
+# Device
+device: "auto"  # auto, cuda, cpu
+
+# Visualization
+max_viz_images: 16
+save_visualizations: true
+
+# Kaggle credentials (optional - can also use kaggle.json)
+kaggle_username: null
+kaggle_key: null
