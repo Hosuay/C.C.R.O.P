@@ -1,0 +1,99 @@
+Sources and Acknowledgments
+
+Data Sources
+Kaggle Datasets
+
+Primary: “Leaf Manifestation Diseases of Cannabis”
+Source: https://www.kaggle.com/datasets/engineeringubu/leaf-manifestation-diseases-of-cannabis
+Used as the primary dataset for model training and leaf stress classification.
+
+Fallback: “New Plant Diseases Dataset”
+Source: https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset
+Used for cross-domain generalization and enhancement of leaf stress recognition.
+
+Research & Scientific References
+
+Mishra, P., et al. (2022). Automated detection of cannabis leaf diseases using deep learning.
+Computers and Electronics in Agriculture.
+
+Mohanty, S.P., et al. (2016). Using Deep Learning for Image-Based Plant Disease Detection.
+Frontiers in Plant Science, 7:1419.
+
+Open-access agricultural datasets from the PlantVillage project used for reference augmentation and benchmark adaptation.
+
+Software and Frameworks
+Python 3.12 (Google Colab Runtime)
+
+PyTorch / Torchvision – Model architecture (ResNet, EfficientNet) and transfer learning
+
+OpenCV – Image preprocessing, filtering, and real-time webcam pipelines
+
+Scikit-learn – Evaluation metrics, confusion matrix, and performance tracking
+
+Kaggle API – Dataset ingestion and pipeline authentication
+
+Matplotlib / Seaborn – Visualization (accuracy trends, confusion heatmaps)
+
+NumPy / Pandas – Data management and performance analytics
+
+Pillow – Image tensor transformations
+
+JSON / Zipfile / Pathlib – Configuration, metadata management, and archive handling
+
+Model and Training Architecture
+Model Architectures:
+ResNet18, ResNet34, ResNet50, EfficientNet-B0 (via torchvision pretrained weights).
+
+Loss Function: CrossEntropyLoss
+
+Optimizer: AdamW
+
+Learning Scheduler: ReduceLROnPlateau (adaptive LR)
+
+Early Stopping: Custom patience-based implementation
+
+Batch Balancing: WeightedRandomSampler for class balance
+
+Evaluation Metrics: Accuracy, Precision, Recall, F1, Confusion Matrix visualization
+
+Technology Contributions
+Core Development:
+Implemented full end-to-end training pipeline with model creation, weighted dataset sampling, metrics tracking, and Tensor export (PyTorch + TorchScript + ONNX).
+
+Feature Highlights:
+
+Dataset fallback support using Kaggle CLI automation
+
+Dynamic class stress mapping (Healthy, Moderate, Severe)
+
+Real-time webcam-based stress detection using OpenCV
+
+Rich visual reporting (heatmaps, training history charts)
+
+Multi-format deployment export: .pth, .pt, .onnx, JSON metadata
+
+Custom StressPredictor and DatasetManager classes for modular use
+
+Community and Project Inspirations
+Kaggle plant pathology and cannabis image datasets community
+
+PyTorch Lightning and fastai ecosystems for modular inspiration
+
+Open-source plant disease recognition initiatives and agricultural AI projects
+
+General structure inspired by academic implementations referenced on:
+
+https://paperswithcode.com/
+
+https://arxiv.org/
+
+https://towardsdatascience.com/
+
+Authorship
+Project Author: (Your GitHub Username or Organization)
+
+Project Type: Machine Learning / Computer Vision – Cannabis Agriculture Health Monitoring
+
+Platform: Google Colab + PyTorch
+
+Development Year: 2025
